@@ -1,0 +1,51 @@
+<div id="<%= dom_id(publication) %>" class="col-md-6 col-lg-12 py-2">
+  <div class="card h-100">
+    <img src="<%= publication.image %>" class="card-img-top" alt="Publicación" style="height: 200px; object-fit: cover;">
+    <div class="card-body">
+      <h5 class="card-title fw-bold">
+        <%= publication.title %>
+      </h5>
+      <p class="card-text fst-italic">
+        <%= publication.description %>
+      </p>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-around">
+        <% Publication::Kinds.each do |kind| %>
+          <% reaction_count = publication.reactions.select { |r| r.kind == kind }.count %>
+          <% reaction_class = kind == 'like' ? 'text-success' : 'text-danger' %>
+          <% reaction_icon = kind == 'like' ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-down-fill' %>
+          <% if action_name == 'show' %>
+            <%= button_to new_user_reaction_path(publication_id: publication.id, kind: kind),
+                          method: :post, style: "all: unset; cursor: pointer" do %>
+              <i class="bi <%= reaction_icon %> <%= reaction_class %> fs-5"></i>
+              <%= reaction_count %>
+            <% end %>
+          <% else %>
+            <div class="reaction-count">
+              <i class="bi <%= reaction_icon %> <%= reaction_class %> fs-5"></i>
+              <%= reaction_count %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="d-flex justify-content-around mt-2">
+        <% if action_name == 'index' %>
+          <%= link_to publication, class: "btn btn-primary btn-sm" do %>
+            Ver más
+          <% end %>
+        <% else %>
+          <% if user_signed_in? && current_user.id == publication.user_id %>
+            <%= link_to edit_publication_path(publication), class: "btn btn-success btn-sm" do %>
+              Editar
+            <% end %>
+            <%= button_to publication, method: :delete, class: "btn btn-danger btn-sm",
+                          data: { confirm: '¿Estás seguro?' } do %>
+              Eliminar
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

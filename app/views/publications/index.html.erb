@@ -1,0 +1,26 @@
+<div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      <%= notice %>
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="display-4">Publicaciones</h1>
+    <% if user_signed_in? %>
+      <%= link_to "Nueva Publicación", new_publication_path, class: "btn btn-primary btn-lg" %>
+    <% end %>
+  </div>
+  <div id="publications" class="row row-cols-1 row-cols-md-4 g-4">
+    <% @publications.each do |publication| %>
+      <div class="col">
+        <div class="card h-100">
+          <%= render publication %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

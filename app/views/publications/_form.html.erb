@@ -1,0 +1,36 @@
+<%= form_with(model: publication, class: "publication-form") do |form| %>
+  <% if publication.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(publication.errors.count, "error") %> prohibited this publication from being saved:</h2>
+
+      <ul>
+        <% publication.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :image, "Imagen", class: "form-label input-label" %>
+    <%= form.text_field :image, placeholder: "URL Imagen", class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :title, "Título", class: "form-label input-label" %>
+    <%= form.text_field :title, placeholder: "Título", class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Descripción", class: "form-label input-label" %>
+    <%= form.text_area :description, placeholder: "Descripción", class: "form-control" %>
+  </div>
+  
+  <div class="mb-3">
+    <% if action_name == "new" %>
+      <%= form.submit "Guardar", class: "btn btn-primary rounded-pill fw-semibold" %>
+    <% else %>
+      <%= form.submit "Actualizar", class: "btn btn-primary rounded-pill fw-semibold" %>
+    <% end %>
+  </div>
+<% end %>

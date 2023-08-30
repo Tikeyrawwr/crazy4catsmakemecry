@@ -1,0 +1,30 @@
+<div class="comment-list">
+  <% @comments.each do |comment| %>
+    <div class="comment-item border rounded p-3 mb-3">
+      <div class="comment-header d-flex align-items-center">
+        <div class="comment-avatar">
+          <% if comment.user_id? %>
+            <img src="<%= comment.user.image %>" class="rounded-circle" style="width: 35px; height: 35px;">
+          <% else %>
+            <img src="https://www.igme.es/Publicaciones/bookImages/nodisponible.png" class="rounded-circle" style="width: 35px; height: 35px;">
+          <% end %>
+        </div>
+        <div class="comment-details ms-3">
+          <div class="comment-author">
+            <% if comment.user_id? %>
+              <%= comment.user.name %>
+            <% else %>
+              Usuario Anónimo
+            <% end %>
+          </div>
+          <div class="comment-time text-muted">
+            <%= distance_of_time_in_words(comment.created_at, Time.now) %> ago
+          </div>
+        </div>
+      </div>
+      <div class="comment-content mt-2">
+        <%= comment.content %>
+      </div>
+    </div>
+  <% end %>
+</div>
